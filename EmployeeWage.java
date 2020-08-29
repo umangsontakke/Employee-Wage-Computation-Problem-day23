@@ -1,3 +1,4 @@
+public class EmpWageUc9 {
 // instance variables
 		private String companyName;
 		private int empRate;
@@ -77,3 +78,4 @@
 			return empHrs;
 
 		}
+}
