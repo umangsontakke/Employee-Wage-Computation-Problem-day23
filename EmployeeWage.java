@@ -1,79 +1,132 @@
-// instance variables
-		private String companyName;
-		private int empRate;
-		private int numOfWorkingDays;
-		private int maxHrsInMonth;
-		private int totalEmpWage;
+public class EmpWageUc10 {
+	private int noOfCompany = 0;
+	private Company [] companies;
 
-		public EmpWageInstance(final String companyName, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth) {
-			
-			this.companyName=companyName;
-			this.empRate = empRate;
-			this.numOfWorkingDays = numOfWorkingDays;
-			this.maxHrsInMonth = maxHrsInMonth;
-		}
+	public EmpWageUc10() {
+	companies = new Company[5];
+	}
 
-		public static void main(String[] args) {
-			final EmpWageUc9 ewMicrosoft = new EmpWageUc9("Microsoft", 20, 20, 100);
-			ewMicrosoft.computeEmpWage();
-			System.out.println("Total Emp Wage of Microsift company=" + ewMicrosoft);
+	public static void main(String[] args) {
+	System.out.println("Starting...");
+	final EmpWageUc10 empBuilder = new EmpWageUc10();
+	empBuilder.addCompany("Apple", 20, 20, 100);
+	empBuilder.addCompany("Microsoft", 20, 18, 110);
 
-			final EmpWageUc9 ewApple = new EmpWageInstance("Apple", 20, 18, 100);
-			ewApple.computeEmpWage();
-			System.out.println("Total Emp Wage of Apple company=" + ewApple);
+	empBuilder.computeEmpWage();
+	}
 
-			final EmpWageUc9 ewHtc = new EmpWageInstance("Htc", 20, 20, 120);
-			ewHtc.computeEmpWage();
-			System.out.println("Total Emp Wage of Htc Company=" + ewHtc);
-		}
+	public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth){
+	System.out.println("Called add company function with name : "+ name);
+	companies[noOfCompany] = new Company(name, empRate, numOfWorkingDays, maxHrsInMonth);
+	noOfCompany++;
+	}
 
-		/**
-		 * calculate employee daily wages based on type of employee
-		 */
 
-		public int computeEmpWage() {
+	private void computeEmpWage(){
 
-			// local Variables
-			int totalWage = 0;
-			int totalEmpHrs = 0;
-			int totalWorkingDays = 0;
-			while (totalEmpHrs < maxHrsInMonth && totalWorkingDays < numOfWorkingDays) {
-				totalWorkingDays++;
+	System.out.println("Called computeEmpWage --->");
+	for(int i = 0; i< noOfCompany; i++){
+	final int totalWage = computeEmpWage(companies[i]);
+	companies[i].setTotalEmpWage(totalWage);
+	System.out.println(companies[i]);
+	}
 
-				final int empHrs = getEmpHrs();
-				final int empWage = empHrs * empRate;
-				totalEmpHrs = empHrs;
-				totalWage = empWage;
-				System.out.println("EMP day=" + totalWorkingDays + "wages=" + empWage);
-			}
-			totalEmpWage=totalWage;
-		}
+	}
+	/**
+	* calculate total employee wages
+	* @param company The Company
+	* @return total employee wages.
+	*/
+	private int computeEmpWage(final Company company) {
+	System.out.println("Calculating company wage for company : " + company.getName());
+	int totalWage = 0;
+	int totalEmpHrs = 0;
+	int totalWorkingDays = 0;
+	while(totalEmpHrs < company.getMaxHrsInMonth() && totalWorkingDays< company.getNumOfWorkingDays()){
+	totalWorkingDays++;
 
-		/* @return employee hrs */
-		public int getEmpHrs() {
+	final int empHrs = getEmpHrs();
+	final int empWage = empHrs*company.getEmpRate();
+	totalEmpHrs+=empHrs;
+	totalWage+=empWage;
+	//System.out.println("Emp DAY : "+totalWorkingDays+" wages : "+empWage);
+	}
+	return totalWage;
+	}
 
-			// local variables
-			final int isFullTime = 1;
-			final int isPartTime = 2;
-			int empHrs = 0;
+	/**
+	* Get employee hours.
+	* @return employee hrs
+	*/
+	public int getEmpHrs() {
+
+	final int isFullTime = 1;
+	final int isPartTime = 2;
+	int empHrs = 0;
 
 	//get random value
-			final double randomValue = Math.floor(Math.random() * 10) % 3;
+	final double randomValue = Math.floor(Math.random()*10)%3;
 
-			switch ((int) randomValue) {
+	switch((int)randomValue) {
 
-			case isFullTime:
-				empHrs = 8;
-				System.out.println("Emp is Present for full time");
-				break;
-			case isPartTime:
-				empHrs = 4;
-				break;
-			default:
-				System.out.println("Emp is absent");
-				break;
+	case isFullTime:
+	empHrs = 8;
+	//System.out.println("Emp is present for full time.");
+	break;
+	case isPartTime:
+	empHrs = 4;
+	//System.out.println("Emp is present for part time.");
+	break;
+	default:
+	//System.out.println("Emp is absent");
+	break;
+	}
+	return empHrs;
+	}
 
-			}
-			return empHrs;
 
-		}
+	}
+
+	/**
+	* CompanyEmpWage
+	*/
+	class Company {
+
+	private String name;
+	private int empRate;
+	private int numOfWorkingDays;
+	private int maxHrsInMonth;
+	private int totalEmpWage;
+
+	public Company(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth){
+	this.name = name;
+	this.empRate = empRate;
+	this.numOfWorkingDays = numOfWorkingDays;
+	this.maxHrsInMonth = maxHrsInMonth;
+	}
+
+	public String getName(){
+	return this.name;
+	}
+
+	public int getEmpRate(){
+	return this.empRate;
+	}
+
+	public int getNumOfWorkingDays(){
+	return this.numOfWorkingDays;
+	}
+
+	public int getMaxHrsInMonth(){
+	return this.maxHrsInMonth;
+	}
+
+	public void setTotalEmpWage(final int totalEmpWage){
+	this.totalEmpWage=totalEmpWage;
+	}
+
+	@Override
+	public String toString(){
+	return "Total emp wage for company: "+name+" is "+ totalEmpWage;
+	}
+}
