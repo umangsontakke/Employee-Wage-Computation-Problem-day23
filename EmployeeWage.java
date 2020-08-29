@@ -1,24 +1,23 @@
-public class CheckEmpPresentAbsent
+kpublic class DailyEmpWage
 {
 	public static void main(String[] arg)
 	{
                   //Constants
 		int fullTimeEmp=1;
-	    	int randomCheck=(int)((Math.random()*10)%2);
-		System.out.println(randomCheck);	
-		if(fullTimeEmp==randomCheck)
-	{
-		System.out.println("empoyee is present");
-
-	}
-	else
-	{
-		System.out.println("employee is absent");	
+		int EMP_RATE_PER_HOUR=20;
+			//Variables
+		int empHrs=0;
+		int empWage=0;
+			//Computation
+		int empCheck=(Math.random()*10)%2;
+		if(empCheck==IS_FULL_TIME)
+		empHrs=8;
+		else
+		empHrs=0;
+		empWage=empHrs*EMP_RATE_PER_HOUR;
+		System.out.println("Emp Wage="+empWage);
+	    	
 
 	}
 
 }
-
-
-}
-© 2020 GitHub, Inc.
