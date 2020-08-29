@@ -1,38 +1,72 @@
-public class TotalWorkinghrsMonth
-{
+public class EmpWageInstance {
+	
+	//instance variables
 
-public static final int IS_PART_TIME=1;
-public static final int IS_FULL_TIME=2;
-public static final int EMP_RATE_PER_HOUR=20;
-public static final int NUM_OF_WORKING_DAYS=2;
-public static final int MAX_HRS_IN_MONTH=10;
-	public static void main(String[] arg)
-	{
-                  //variables
-		int empHrs=0;
-		int totalempHrs=0;
-		int totalWorkingDays=0;
-	           //computation
-		while(totalEmpHrs<=MAX_HRS_IN_MONTH &&
-		totalworkingdays<NUM_OF_WORKING_DAYS)
-		{
-		totalWorkingDays++;
-                  int empCheck=(int)(Math.random()*10)%3;
-		switch(empCheck){
-		case IS_PART_TIME:
-			empHrs=4;
+	private int empRate;
+	private int numOfWorkingDays;
+	private int maxHrsInMonth;
+
+	//instance method
+	public EmpWageInstance(final int empRate, final int numOfWorkingDays, final int maxHrsInMonth) {
+		this.empRate = empRate;
+		this.numOfWorkingDays = numOfWorkingDays;
+		this.maxHrsInMonth = maxHrsInMonth;
+	}
+
+	public static void main(String[] args) {
+		final EmpWageInstance ewi = new EmpWageInstance(20, 20, 100);
+		ewi.caldailyEmpWage();
+	}
+
+	/**
+	 * calculate employee daily wages based on type of employee
+	 */
+
+	public void caldailyEmpWage() {
+		
+		//local variables
+		int totalWage = 0;
+		int totalEmpHrs = 0;
+		int totalWorkingDays = 0;
+		while (totalEmpHrs < maxHrsInMonth && totalWorkingDays<numOfWorkingDays) {
+			totalWorkingDays++;
+
+			final int empHrs = getEmpHrs();
+			final int empWage = empHrs * empRate;
+			totalEmpHrs = empHrs;
+			totalWage = empWage;
+			System.out.println("EMP day=" + totalWorkingDays + "wages=" + empWage);
+		}
+		System.out.println("Total emp Wage=" + totalWage);
+	}
+
+	/* @return employee hrs */
+	public int getEmpHrs() {
+		
+		//local variables
+		
+		final int isFullTime = 1;
+		final int isPartTime = 2;
+		int empHrs = 0;
+
+                //get random value
+		final double randomValue = Math.floor(Math.random() * 10) % 3;
+
+		switch ((int) randomValue) {
+
+		case isFullTime:
+			empHrs = 8;
+			System.out.println("Emp is Present for full time");
 			break;
-		case IS_FULL_TIME:
-			empHrs=8;
+		case isPartTime:
+			empHrs = 4;
 			break;
 		default:
-			empHrs=0;
-	        }
-		
-		totalEmpWage+=empWage;
-		System.out.println("Day#:"+TotalWorkingDays+"Emp Hr:"+empHrs);
-        }
-		int totalEmpWage=totalEmpHrs*EMP_RATE_PER_HOUR;
-		System.out.println("Total Emp Wage="+totalEmpWage);	
+			System.out.println("Emp is absent");
+			break;
 
+		}
+		return empHrs;
+
+	}
 }
