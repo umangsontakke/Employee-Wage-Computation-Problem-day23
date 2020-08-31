@@ -10,7 +10,7 @@ interface EmpWageBuilder{
 	
 }
 
-public class EmpWageUc13 {
+public class EmpWageUc13 implements EmpWageBuilder{
 	
 	private List<Company> companies;
 	private Map<String, Integer>companyWages;
