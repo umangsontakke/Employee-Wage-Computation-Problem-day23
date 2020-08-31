@@ -1,12 +1,23 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
-public class EmpWageUc12 {
+interface EmpWageBuilder{
 
+	void addCompany(final String name,final int empRate, final int numOfWorkingDays,final int maxHrsInMonth);
+	void computeEmpWage();
+	
+}
+
+public class EmpWageUc13 {
+	
 	private List<Company> companies;
+	private Map<String, Integer>companyWages;
 
-	public EmpWageUc12() {
+	public EmpWageUc13() {
 		companies = new ArrayList<Company>();
+		companyWages=new HashMap<String, Integer>();
 	}
 
 	public static void main(String[] args) {
@@ -16,13 +27,16 @@ public class EmpWageUc12 {
 		empBuilder.addCompany("Microsoft", 20, 18, 110);
 
 		empBuilder.computeEmpWage();
+				
 	}
 
+	@Override
 	public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth) {
 		System.out.println("Called add company function with name : " + name);
 		companies.add(new Company(name, empRate, numOfWorkingDays, maxHrsInMonth));
 	}
 
+	@Override
 	private void computeEmpWage() {
 
 		System.out.println("Called computeEmpWage --->");
@@ -30,8 +44,10 @@ public class EmpWageUc12 {
 			final Company company = companies.get(i);
 			final int totalWage = computeEmpWage(company);
 			company.setTotalEmpWage(totalWage);
-			System.out.println(company);
+			companyWages.put(company.getName(), totalWage);
+		
 		}
+		System.out.println("Stored values in map--->"+companyWages.toString());
 
 	}
 
@@ -138,4 +154,5 @@ class Companys {
 	public String toString() {
 		return "Total emp wage for company: " + name + " is " + totalEmpWage;
 	}
+	
 }
