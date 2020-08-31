@@ -1,4 +1,4 @@
-public class EmpWageUc10 {
+public class EmpWageUc11 {
 	
 	//instance variable
 	private int noOfCompany = 0;
