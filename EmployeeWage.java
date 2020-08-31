@@ -1,4 +1,4 @@
-public class EmpWageUc10 {
+public class EmpWageUc11 {
 	private int noOfCompany = 0;
 	private Company [] companies;
 
