@@ -3,21 +3,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-interface EmpWageBuilder{
+interface EmpWageBuilder {
 
-	void addCompany(final String name,final int empRate, final int numOfWorkingDays,final int maxHrsInMonth);
+	void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth);
+
 	void computeEmpWage();
-	
+
+	int getTotalWageByCompanyName(final String name);
+
 }
 
-public class EmpWageUc13 {
-	
-	private List<Company> companies;
-	private Map<String, Integer>companyWages;
+public class EmpWageUc14 implements EmpWageBuilder {
 
-	public EmpWageUc13() {
+	private List<Company> companies;
+	private Map<String, Integer> companyWages;
+
+	public EmpWageUc14() {
 		companies = new ArrayList<Company>();
-		companyWages=new HashMap<String, Integer>();
+		companyWages = new HashMap<String, Integer>();
 	}
 
 	public static void main(String[] args) {
@@ -27,15 +30,27 @@ public class EmpWageUc13 {
 		empBuilder.addCompany("Microsoft", 20, 18, 110);
 
 		empBuilder.computeEmpWage();
-				
+
+		// Query for Apple Company
+		final int totalWage = empBuilder.getTotalWageByCompanyName("Apple");
+		System.out.println("total Emp Wages for Apple=" + totalWage);
 	}
 
+	// method for calculating Total Wage of Company
+	@Override
+	public int getTotalWageByCompanyName(final String name) {
+		final int totalWage = companyWages.get(name);
+		return totalWage;
+	}
+
+	// method for adding company
 	@Override
 	public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth) {
 		System.out.println("Called add company function with name : " + name);
 		companies.add(new Company(name, empRate, numOfWorkingDays, maxHrsInMonth));
 	}
 
+	// method for calculating total wage of employee
 	@Override
 	private void computeEmpWage() {
 
@@ -45,9 +60,9 @@ public class EmpWageUc13 {
 			final int totalWage = computeEmpWage(company);
 			company.setTotalEmpWage(totalWage);
 			companyWages.put(company.getName(), totalWage);
-		
+
 		}
-		System.out.println("Stored values in map--->"+companyWages.toString());
+		System.out.println("Stored values in map--->" + companyWages.toString());
 
 	}
 
@@ -59,8 +74,8 @@ public class EmpWageUc13 {
 	 */
 	private int computeEmpWage(final Company company) {
 		System.out.println("Calculating company wage for company : " + company.getName());
-		
-		//local variables
+
+		// local variables
 		int totalWage = 0;
 		int totalEmpHrs = 0;
 		int totalWorkingDays = 0;
@@ -83,8 +98,7 @@ public class EmpWageUc13 {
 	 */
 	public int getEmpHrs() {
 
-		
-		//local variables
+		// local variables
 		final int isFullTime = 1;
 		final int isPartTime = 2;
 		int empHrs = 0;
@@ -116,7 +130,7 @@ public class EmpWageUc13 {
  */
 class Companys {
 
-	//instance variables
+	// instance variables
 	private String name;
 	private int empRate;
 	private int numOfWorkingDays;
@@ -154,5 +168,5 @@ class Companys {
 	public String toString() {
 		return "Total emp wage for company: " + name + " is " + totalEmpWage;
 	}
-	
+
 }
